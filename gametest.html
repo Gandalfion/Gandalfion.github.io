@@ -1,0 +1,101 @@
+<canvas id="gc" width="600" height="600"></canvas>
+<script>
+window.onload=function() {
+    canv=document.getElementById("gc");
+    ctx=canv.getContext("2d");
+    document.addEventListener("keydown",keyPush);
+    setInterval(game,1000/25);
+}
+px=py=15;
+p2x=p2y=15;
+gs=30;
+tc=20;
+ax=ay=15;
+xv=yv=x2v=y2v=0;
+
+trail=[];
+tail = 5;
+function game() {
+    px+=xv/4;
+    py+=yv/4;
+    p2x+=x2v/4;
+    p2y+=y2v/4;
+    if(px<0) {
+        px= tc-1;
+    }
+    if(px>tc-1) {
+        px= 0;
+    }
+    if(py<0) {
+        py= tc-1;
+    }
+    if(py>tc-1) {
+        py= 0;
+    }
+
+
+    if(p2x<0) {
+        p2x= tc-1;
+    }
+    if(p2x>tc-1) {
+        p2x= 0;
+    }
+    if(p2y<0) {
+        p2y= tc-1;
+    }
+    if(p2y>tc-1) {
+        p2y= 0;
+    }
+    ctx.fillStyle="black";
+    ctx.fillRect(0,0,canv.width,canv.height);
+
+    ctx.fillStyle="lime";
+
+        ctx.fillRect(px*gs,py*gs,gs-2,gs-2);
+        ctx.fillStyle="blue";
+        ctx.fillRect(p2x*gs,p2y*gs,gs-2,gs-2);
+
+
+
+    // trail.push({x:px,y:py});
+    // while(trail.length>tail) {
+    // trail.shift();
+    // }
+
+    if(ax==px && ay==py) {
+        tail++;
+        ax=Math.floor(Math.random()*tc);
+        ay=Math.floor(Math.random()*tc);
+    }
+    ctx.fillStyle="red";
+    ctx.fillRect(ax*gs,ay*gs,gs-2,gs-2);
+}
+function keyPush(evt) {
+    switch(evt.keyCode) {
+        case 37:
+            xv=-1;yv=0;
+            break;
+        case 38:
+            xv=0;yv=-1;
+            break;
+        case 39:
+            xv=1;yv=0;
+            break;
+        case 40:
+            xv=0;yv=1;
+            break;
+            case 65:
+                x2v=-1;y2v=0;
+                break;
+            case 87:
+                x2v=0;y2v=-1;
+                break;
+            case 68:
+                x2v=1;y2v=0;
+                break;
+            case 83:
+                x2v=0;y2v=1;
+                break;
+    }
+}
+</script>
